@@ -26,9 +26,9 @@ const ComingSoonPage: React.FC = () => {
             </div>
 
             <div className="flex flex-col items-center p-[0px_16px] gap-[24px] w-[390px] h-[110px]">
-                <div className="flex flex-row justify-center items-center p-[10px] gap-[10px] w-[358px] h-[60px] bg-[#B05BDA] rounded-full">
+                <div onClick={() => router.push('/homepage')}
+                    className="flex flex-row justify-center items-center p-[10px] gap-[10px] w-[358px] h-[60px] bg-[#B05BDA] rounded-full">
                     <button
-                        onClick={() => router.push('/homepage')}
                         className="text-[#FFFFFF] text-[16px] font-[500] leading-[24px] font-poppins"
                     >
                         Got It
