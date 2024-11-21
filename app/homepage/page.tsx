@@ -14,6 +14,7 @@ const Homepage: React.FC = () => {
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [iframeUrl, setIframeUrl] = useState<string | null>(null);
 
     useEffect(() => {
         async function fetchAvatar() {
@@ -34,6 +35,20 @@ const Homepage: React.FC = () => {
 
         fetchAvatar();
     }, []);
+
+    const handleFetchIframeUrl = async () => {
+        try {
+            const response = await fetch('/api/offramp'); // Adjust this path to your API
+            if (!response.ok) {
+                throw new Error('Failed to fetch iframe URL');
+            }
+            const data = await response.json();
+            setIframeUrl(data.url); // Assuming the API returns { url: "iframe_url" }
+        } catch (error) {
+            console.error(error);
+            setIframeUrl(null);
+        }
+    };
 
     return (
         <div className="flex flex-col max-w-[512px] h-[100vh] bg-white">
@@ -104,6 +119,7 @@ const Homepage: React.FC = () => {
                     imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/b2013954e5283e1eeb2878504c63414d869efdaa4bb9e93d2e86f1f4d6ded08e?placeholderIfAbsent=true&apiKey=18ccfdb5083c46ed846dde897794429a"
                     bgColor="bg-fuchsia-200"
                     textColor="text-black"
+                    onClick={handleFetchIframeUrl} // Add the onClick to fetch iframe URL
                 />
                 <button onClick={() => router.push('/coming-soon')}
                     className="flex gap-2.5 justify-center items-center px-2.5 bg-gray-100 h-[60px] min-h-[60px] rounded-[1000px] w-[60px]">
@@ -116,6 +132,24 @@ const Homepage: React.FC = () => {
                 </button>
             </section>
 
+            {iframeUrl && (
+                <div className="flex justify-center mt-6">
+                    <iframe
+                        src={iframeUrl}
+                        allow="fullscreen"
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100vw',
+                            height: '100vh',
+                            border: 'none',
+                            zIndex: 9999, // Ensure it appears on top of other content
+                        }}
+                    ></iframe>
+                </div>
+            )}
+
             <TransactionList />
 
             <Navbar />
@@ -124,3 +158,4 @@ const Homepage: React.FC = () => {
 };
 
 export default Homepage;
+``
