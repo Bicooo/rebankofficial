@@ -42,7 +42,7 @@ export async function POST(req: Request) {
                                 {
                                     text: 'Open Web App',
                                     web_app: {
-                                        url: 'https://rebankofficial.vercel.app/',
+                                        url: 'https://rebankify.vercel.app/',
                                     }
                                 }
                             ]
